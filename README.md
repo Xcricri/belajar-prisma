@@ -102,6 +102,4 @@ public/       # File statis (Gambar, dll)
 | `npx prisma studio` | Membuka GUI database (Prisma Studio) |
 | `npx prisma format` | Merapikan file schema.prisma         |
 
-```
-
-```
+## Sekian dari saya terimakasih
