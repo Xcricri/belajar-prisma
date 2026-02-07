@@ -1,88 +1,100 @@
-# My Prisma & Next.js App
+# 🚀 My Prisma & Next.js Fullstack App
 
-Project ini menggunakan **Next.js + Prisma + Clerk**.  
-Berfungsi sebagai aplikasi web fullstack dengan autentikasi Clerk dan ORM Prisma.
+Aplikasi web modern yang dibangun menggunakan **Next.js**, **Prisma ORM**, **Clerk Authentication**, dan **DaisyUI**.
+
+---
+
+## ✨ Fitur Utama
+
+- 🔐 **Autentikasi**: Terintegrasi dengan [Clerk](https://clerk.com/) untuk manajemen user yang aman.
+- 🗄️ **ORM**: Menggunakan [Prisma](https://www.prisma.io/) untuk interaksi database yang efisien.
+- 🎨 **Styling**: Tampilan menarik dengan [Tailwind CSS](https://tailwindcss.com/) dan [DaisyUI](https://daisyui.com/).
+- ⚡ **Framework**: [Next.js](https://nextjs.org/) untuk performa tinggi dan SEO friendly.
 
 ---
 
 ## 1️⃣ Prasyarat
 
 Pastikan kamu sudah menginstal:
-
-- [Node.js v18+](https://nodejs.org/) (Direkomendasikan v20+)
+- [Node.js v18+](https://nodejs.org/)
 - [npm](https://www.npmjs.com/) atau [pnpm](https://pnpm.io/)
-- Database (PostgreSQL / MySQL / SQLite) sesuai konfigurasi `.env`
+- Akun [Clerk](https://clerk.com/) untuk mendapatkan API Keys.
 
 ---
 
 ## 2️⃣ Instalasi
 
-Clone repository ini:
+1. Clone repository:
+   ```bash
+   git clone https://github.com/Xcricri/belajar-prisma.git
+   cd my-app
+   ```
 
-```bash
-git clone https://github.com/Xcricri/belajar-prisma.git
-cd my-app
-```
+2. Instal dependensi:
+   ```bash
+   npm install
+   ```
 
-Instal dependensi:
+---
 
-```bash
-npm install
-# atau
-pnpm install
+## 3️⃣ Konfigurasi .env
+
+Buat file `.env` di root direktori. Kamu bisa menyalin dari `.env.example` jika tersedia:
+
+```env
+# Database
+DATABASE_URL="file:./dev.db"
+
+# Clerk Auth
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+# App Config
+APP_URL=http://localhost:3000
 ```
 
 ---
 
-## 3️⃣ Konfigurasi Environment Variables
+## 4️⃣ Setup Database
 
-Copy file `.env.example` ke `.env`:
-
-```bash
-cp .env.example .env
-```
-
----
-
-## 4️⃣ Konfigurasi Prisma
-
-Lakukan sinkronisasi database dan generate client:
+Inisialisasi database dan generate Prisma client:
 
 ```bash
 npx prisma generate
 npx prisma migrate dev --name init
 ```
 
-Untuk melihat database melalui GUI:
+---
 
+## 5️⃣ Jalankan Aplikasi
+
+Mode pengembangan:
 ```bash
-npx prisma studio
+npm run dev
 ```
-
-Default URL: [http://localhost:51212](http://localhost:51212)
+Aplikasi akan tersedia di: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 5️⃣ Menjalankan Server
+## 📂 Struktur Folder
 
-Jalankan aplikasi dalam mode development:
-
-```bash
-npm run dev
-# atau
-pnpm dev
+```text
+app/          # Route & tampilan Next.js
+lib/          # Konfigurasi library (Shared Prisma client)
+prisma/       # Schema & file migrasi database
+public/       # File statis (Gambar, dll)
 ```
-
-Server akan tersedia di: [http://localhost:3000](http://localhost:3000)
 
 ---
 
 ## 📜 Perintah Berguna
 
-| Perintah                 | Deskripsi                            |
-| ------------------------ | ------------------------------------ |
-| `npm run dev`            | Menjalankan server development       |
-| `npm run build`          | Membuat build produksi               |
-| `npm run start`          | Menjalankan build produksi           |
-| `npx prisma studio`      | Membuka Prisma Studio                |
-| `npx prisma migrate dev` | Membuat dan menjalankan migrasi baru |
+| Perintah | Deskripsi |
+| --- | --- |
+| `npm run dev` | Menjalankan server development |
+| `npm run build` | Membuat build produksi |
+| `npx prisma studio` | Membuka GUI database (Prisma Studio) |
+| `npx prisma format` | Merapikan file schema.prisma |
+```
