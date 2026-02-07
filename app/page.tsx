@@ -18,13 +18,13 @@ export default function Home() {
                             className="btn btn-primary hover:scale-105 transition-transform"
                             onClick={() => setCounter(counter + 1)}
                         >
-                            Increment
+                            Tambah +
                         </button>
                         <button
                             className="btn btn-warning hover:scale-105 transition-transform"
                             onClick={() => setCounter(counter - 1)}
                         >
-                            Decrement
+                            Kurang -
                         </button>
                     </div>
 

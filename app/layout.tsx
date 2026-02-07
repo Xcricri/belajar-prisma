@@ -34,12 +34,16 @@ export default function RootLayout({
         <ClerkProvider>
             <html lang="en">
                 <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                    <header className="flex justify-end items-center p-4 gap-4 h-16">
+                    <header className="flex justify-end items-center p-4 gap-2 h-16">
                         {/* Show the sign-in and sign-up buttons when the user is signed out */}
                         <SignedOut>
-                            <SignInButton />
+                            <SignInButton>
+                                <button className="btn btn-sm rounded-none hover:brightness-110 transition">
+                                    Sign In
+                                </button>
+                            </SignInButton>
                             <SignUpButton>
-                                <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                                <button className="btn btn-sm bg-[#6c47ff] text-white rounded-none hover:brightness-110 transition">
                                     Sign Up
                                 </button>
                             </SignUpButton>

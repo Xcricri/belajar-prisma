@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 
+
 export async function GET(request: Request) {
     const { userId, getToken } = auth();
 
@@ -9,9 +10,10 @@ export async function GET(request: Request) {
     }
 
     try {
-        const token = await getToken(); // menunggu token async
-        return NextResponse.json({ token }); // bungkus token dalam objek JSON
+        const token = await getToken();
+        return NextResponse.json({ token });
     } catch (err) {
         return NextResponse.json({ error: "Failed to get token" }, { status: 500 });
     }
+
 }
