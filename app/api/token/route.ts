@@ -1,19 +1,13 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 
-
-export async function GET(request: Request) {
-    const { userId, getToken } = auth();
-
-    if (!userId) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+export async function GET() {
     try {
-        const token = await getToken();
-        return NextResponse.json({ token });
-    } catch (err) {
-        return NextResponse.json({ error: "Failed to get token" }, { status: 500 });
-    }
+        const { getToken } = await auth();
+        const userToken = await getToken();
 
+        return NextResponse.json({ "token": userToken });
+    } catch (error) {
+        return NextResponse.json({ error: error instanceof Error ? error.message : "An unknown error occurred" }, { status: 500 });
+    }
 }
