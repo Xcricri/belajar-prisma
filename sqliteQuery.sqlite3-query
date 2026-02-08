@@ -1,0 +1,11 @@
+-- database: ./dev.db
+
+SELECT * FROM User;
+
+SELECT * FROM User WHERE id LIKE '1';
+
+SELECT count(*) FROM User;
+
+SELECT count(*) FROM User WHERE role = 'admin';
+
+SELECT count(*) FROM User WHERE email LIKE '%i%';

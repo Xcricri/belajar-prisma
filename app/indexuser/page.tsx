@@ -11,6 +11,7 @@ type User = {
     email: string;
     role: string;
     address: string;
+    create_ad: string;
 };
 
 const Page = () => {
@@ -50,7 +51,23 @@ const Page = () => {
                 <div>
                     <h1 className="text-2xl font-bold">User Data</h1>
                 </div>
-                <div>
+                <div className="flex gap-2 items-center">
+                    <label className="input">
+                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                strokeWidth="2.5"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+                        <input type="search" required placeholder="Search" />
+                    </label>
+                    <Link href="/adduser" className="btn btn-sm btn-success text-white">Add User</Link>
                     <button onClick={() => window.location.reload()} className="btn btn-sm btn-primary">Refresh</button>
                 </div>
             </div>
@@ -64,6 +81,7 @@ const Page = () => {
                             <th>Email</th>
                             <th>Role</th>
                             <th>Address</th>
+                            <th>Created At</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -71,7 +89,7 @@ const Page = () => {
                     <tbody>
                         {loading && (
                             <tr>
-                                <td colSpan={6} className="text-center">
+                                <td colSpan={7} className="text-center">
                                     Loading...
                                 </td>
                             </tr>
@@ -84,6 +102,7 @@ const Page = () => {
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
                                 <td>{user.address}</td>
+                                <td>{new Intl.DateTimeFormat("id-ID").format(new Date(user.create_ad))}</td>
                                 <td>
                                     <div className="flex gap-2 items-center justify-center">
                                         <Link href={`/edituser?id=${user.id}`} className="btn btn-sm btn-warning">Edit</Link>
@@ -95,7 +114,7 @@ const Page = () => {
 
                         {!loading && !user.length && (
                             <tr>
-                                <td colSpan={6} className="text-center text-gray-500">
+                                <td colSpan={7} className="text-center text-gray-500">
                                     No user data
                                 </td>
                             </tr>
