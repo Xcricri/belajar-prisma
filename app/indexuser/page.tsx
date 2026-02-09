@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 
@@ -16,13 +17,19 @@ type User = {
 
 const Page = () => {
     const [user, setUser] = useState<User[]>([]);
+    const [filteredUser, setFilteredUser] = useState<User[]>([])
     const [loading, setLoading] = useState(true);
+    const searchParams = useSearchParams();
+    const defaultValue = searchParams.get("id") || '';
+    const [inputValue, setInputValue] = useState(defaultValue);
 
+    // getUser
     const getUser = async () => {
         try {
             setLoading(true);
             const response = await axios.get("/api/userdata");
             setUser(response.data);
+            setFilteredUser(response.data)
         } catch (error) {
             console.error(error);
         } finally {
@@ -30,6 +37,7 @@ const Page = () => {
         }
     };
 
+    // deleteUser
     const deleteUser = async (id: number) => {
         try {
             const res = await axios.delete(`/api/userdata?id=${id}`)
@@ -37,6 +45,35 @@ const Page = () => {
             getUser();
         } catch (error) {
             console.error(error)
+        }
+    }
+
+
+    // Handle Search function
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value);
+    }
+
+    const handleSearch = () => {
+        if (!inputValue.trim()) {
+            setFilteredUser(user);
+            return;
+        }
+
+        const keyword = inputValue.toLocaleLowerCase()
+
+        const result = user.filter((u) =>
+            u.id.toString().includes(keyword) ||
+            u.name.toLowerCase().includes(keyword) ||
+            u.email.toLowerCase().includes(keyword)
+        )
+
+        setFilteredUser(result)
+    }
+
+    const handleKeyPress = (event: { key: string }) => {
+        if (event.key === "Enter") {
+            handleSearch()
         }
     }
 
@@ -65,7 +102,14 @@ const Page = () => {
                                 <path d="m21 21-4.3-4.3"></path>
                             </g>
                         </svg>
-                        <input type="search" required placeholder="Search" />
+                        <input
+                            type="text"
+                            placeholder="Enter keywords"
+                            value={inputValue}
+                            onChange={handleChange}
+                            onKeyDown={handleKeyPress}
+                        />
+                        <button onClick={handleSearch}>Search</button>
                     </label>
                     <Link href="/adduser" className="btn btn-sm btn-success text-white">Add User</Link>
                     <button onClick={() => window.location.reload()} className="btn btn-sm btn-primary">Refresh</button>
@@ -95,7 +139,7 @@ const Page = () => {
                             </tr>
                         )}
 
-                        {!loading && user.map((user) => (
+                        {!loading && filteredUser.map((user) => (
                             <tr key={user.id}>
                                 <td>{user.id}</td>
                                 <td>{user.name}</td>
@@ -112,7 +156,7 @@ const Page = () => {
                             </tr>
                         ))}
 
-                        {!loading && !user.length && (
+                        {!loading && !filteredUser.length && (
                             <tr>
                                 <td colSpan={7} className="text-center text-gray-500">
                                     No user data
